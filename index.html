@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vogue & Style Boutique | Gestión de Inventario, POS & Finanzas</title>
+    <meta name="description" content="Plataforma interactiva de administración de inventario, punto de venta y gestión financiera para tienda de ropa.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full text-slate-800 antialiased bg-slate-50 flex flex-col md:flex-row overflow-x-hidden">
+
+    <!-- OVERLAY NAVEGACIÓN MÓVIL -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden md:hidden transition-opacity"></div>
+
+    <!-- SIDEBAR NAVEGACIÓN -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-slate-900 text-slate-300 flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-slate-800">
+        <!-- Sidebar Header -->
+        <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800 bg-slate-950/50">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                    <i data-lucide="shirt" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-white tracking-wide text-lg font-heading leading-tight">Vogue & Style</h1>
+                    <span class="text-xs text-indigo-400 font-medium tracking-widest uppercase">Boutique ERP</span>
+                </div>
+            </div>
+            <button id="close-mobile-menu" class="md:hidden text-slate-400 hover:text-white p-1">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Sidebar Navigation Menu -->
+        <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+            <div class="px-3 pb-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Menú Principal</div>
+            
+            <a href="#dashboard" data-section="dashboard" class="nav-link active flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>📊 Dashboard</span>
+            </a>
+
+            <a href="#inventario" data-section="inventario" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="package" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>📦 Inventario & Productos</span>
+            </a>
+
+            <a href="#pos" data-section="pos" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="shopping-cart" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <div class="flex-1 flex items-center justify-between">
+                    <span>🛒 Ventas (POS)</span>
+                    <span class="bg-indigo-500/20 text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo-500/30">Caja</span>
+                </div>
+            </a>
+
+            <a href="#proveedores" data-section="proveedores" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="truck" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>🚚 Proveedores & Lotes</span>
+            </a>
+
+            <a href="#devoluciones" data-section="devoluciones" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="rotate-ccw" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>🔄 Devoluciones</span>
+            </a>
+
+            <div class="pt-4 px-3 pb-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Gestión & Reportes</div>
+
+            <a href="#finanzas" data-section="finanzas" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="wallet" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>💰 Cuentas & Finanzas</span>
+            </a>
+
+            <a href="#usuarios" data-section="usuarios" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="users" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>👥 Gestión de Usuarios</span>
+            </a>
+
+            <a href="#reportes" data-section="reportes" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800/80 hover:text-white group">
+                <i data-lucide="bar-chart-3" class="w-5 h-5 text-slate-400 group-hover:text-indigo-400"></i>
+                <span>📈 Reportes & Analítica</span>
+            </a>
+        </nav>
+
+        <!-- Sidebar Footer / Store Status -->
+        <div class="p-4 border-t border-slate-800 bg-slate-950/40">
+            <div class="bg-slate-800/60 rounded-xl p-3 flex items-center gap-3">
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></div>
+                <div class="text-xs">
+                    <p class="font-semibold text-slate-200" id="store-name-display">Vogue & Style</p>
+                    <p class="text-slate-400 text-[11px]" id="store-nit-display">NIT: 900.854.123-7</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="flex-1 md:pl-72 flex flex-col min-h-screen">
+        
+        <!-- HEADER SUPERIOR -->
+        <header class="h-16 bg-white border-b border-slate-200 sticky top-0 z-30 px-4 md:px-8 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-4">
+                <button id="open-mobile-menu" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <div class="hidden sm:flex items-center gap-2 text-sm text-slate-500">
+                    <span class="font-semibold text-slate-900" id="header-current-section-title">Dashboard</span>
+                    <span>•</span>
+                    <span id="current-date-display" class="text-xs text-slate-400">Cargando fecha...</span>
+                </div>
+            </div>
+
+            <!-- Header Right Controls -->
+            <div class="flex items-center gap-4">
+                <!-- Stock Warning Pill Counter -->
+                <button onclick="app.navigateTo('inventario')" class="flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-amber-100 transition-colors">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-500"></i>
+                    <span>Stock Bajo: <strong id="header-low-stock-count" class="font-bold">0</strong></span>
+                </button>
+
+                <!-- Selector de Usuario Activo -->
+                <div class="relative">
+                    <div class="flex items-center gap-3 bg-slate-100 hover:bg-slate-200/80 px-3 py-1.5 rounded-xl cursor-pointer transition-colors border border-slate-200" id="user-selector-trigger">
+                        <div class="w-7 h-7 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center" id="user-avatar-badge">
+                            V
+                        </div>
+                        <div class="text-left hidden sm:block">
+                            <p class="text-xs font-bold text-slate-800 leading-tight" id="user-active-name">Valeria Gómez</p>
+                            <p class="text-[10px] text-slate-500 font-medium" id="user-active-role">Administrador</p>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-500"></i>
+                    </div>
+
+                    <!-- Dropdown de cambio de usuario -->
+                    <div id="user-selector-dropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-50">
+                        <div class="px-3 py-1.5 border-b border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                            Cambiar Perfil Activo
+                        </div>
+                        <div id="user-dropdown-list" class="py-1">
+                            <!-- Inyectado desde app.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN APP CONTENT AREA (8 SECCIONES) -->
+        <main class="flex-1 p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+            <!-- SECCIÓN 1: DASHBOARD PRINCIPAL -->
+            <section id="sec-dashboard" class="section-page active-section space-y-6">
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-2xl font-bold font-heading">¡Hola, <span id="dash-user-name">Valeria</span>! 👋</h2>
+                        <p class="text-slate-300 text-sm mt-1">Resumen general del estado del inventario, ventas y caja del día de hoy.</p>
+                    </div>
+                    <div class="flex items-center gap-3 relative z-10">
+                        <button onclick="app.navigateTo('pos')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all">
+                            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                            <span>Ir al POS / Caja</span>
+                        </button>
+                        <button onclick="app.openBatchModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2.5 rounded-xl font-semibold text-sm border border-slate-700 flex items-center gap-2 transition-all">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Registrar Lote</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Metric Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <!-- KPI 1: Ventas del día -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ventas del Día</p>
+                            <h3 class="text-2xl font-extrabold text-slate-900 mt-1 font-heading" id="kpi-today-sales">$0</h3>
+                            <span class="inline-flex items-center text-xs font-semibold text-emerald-600 mt-1">
+                                <i data-lucide="trending-up" class="w-3.5 h-3.5 mr-1"></i> <span id="kpi-today-count">0 ventas hoy</span>
+                            </span>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+
+                    <!-- KPI 2: Entradas del día -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Entradas (Lotes Hoy)</p>
+                            <h3 class="text-2xl font-extrabold text-slate-900 mt-1 font-heading" id="kpi-today-inputs">0 unid</h3>
+                            <p class="text-xs text-slate-500 mt-1">Ingresadas al stock</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <i data-lucide="arrow-down-right" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+
+                    <!-- KPI 3: Salidas del día -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Salidas (Prendas Vendidas)</p>
+                            <h3 class="text-2xl font-extrabold text-slate-900 mt-1 font-heading" id="kpi-today-outputs">0 unid</h3>
+                            <p class="text-xs text-slate-500 mt-1">Descontadas del inventario</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                            <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+
+                    <!-- KPI 4: Alertas de Stock Bajo -->
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Stock Bajo (&lt; 5 unid)</p>
+                            <h3 class="text-2xl font-extrabold text-amber-600 mt-1 font-heading" id="kpi-low-stock">0 prendas</h3>
+                            <span class="inline-flex items-center text-xs font-medium text-amber-600 mt-1 cursor-pointer hover:underline" onclick="app.navigateTo('inventario')">
+                                Ver prendas en alerta →
+                            </span>
+                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i data-lucide="alert-octagon" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historial de Transacciones Recientes del Día -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg font-heading">Últimas Transacciones</h3>
+                            <p class="text-xs text-slate-500">Ventas registradas recientemente en caja POS</p>
+                        </div>
+                        <button onclick="app.navigateTo('pos')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800">
+                            Nueva Venta +
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-wider border-b border-slate-100">
+                                <tr>
+                                    <th class="py-3.5 px-5">Ticket / Hora</th>
+                                    <th class="py-3.5 px-5">Vendedor</th>
+                                    <th class="py-3.5 px-5">Método Pago</th>
+                                    <th class="py-3.5 px-5">Ítems</th>
+                                    <th class="py-3.5 px-5 text-right">Total</th>
+                                    <th class="py-3.5 px-5 text-center">Estado</th>
+                                    <th class="py-3.5 px-5 text-right">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-recent-sales-tbody" class="divide-y divide-slate-100">
+                                <!-- Inyectado dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 2: MÓDULO DE INVENTARIO & PRODUCTOS -->
+            <section id="sec-inventario" class="section-page space-y-6">
+                <!-- Section Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">📦 Inventario & Catálogo de Prendas</h2>
+                        <p class="text-slate-500 text-sm">Administra existencias, tallas, precios y alertas de reabastecimiento.</p>
+                    </div>
+                    <button onclick="app.openProductModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all self-start sm:self-auto">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>Nuevo Producto</span>
+                    </button>
+                </div>
+
+                <!-- Buscador y Filtros -->
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col md:flex-row gap-3">
+                    <div class="flex-1 relative">
+                        <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                        <input type="text" id="inv-search-input" placeholder="Buscar por SKU / Código de barras, Nombre o Marca..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all">
+                    </div>
+                    <div class="flex gap-3">
+                        <select id="inv-category-filter" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Todas las Categorías</option>
+                        </select>
+                        <select id="inv-size-filter" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Todas las Tallas</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabla de Productos -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-wider border-b border-slate-100">
+                                <tr>
+                                    <th class="py-3.5 px-5">Prenda / SKU</th>
+                                    <th class="py-3.5 px-5">Categoría</th>
+                                    <th class="py-3.5 px-5 text-center">Talla / Color</th>
+                                    <th class="py-3.5 px-5 text-center">Stock</th>
+                                    <th class="py-3.5 px-5 text-right">Costo Compra</th>
+                                    <th class="py-3.5 px-5 text-right">Precio Venta</th>
+                                    <th class="py-3.5 px-5 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-tbody" class="divide-y divide-slate-100">
+                                <!-- Inyectado desde app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 3: PUNTO DE VENTA (POS / CAJA) -->
+            <section id="sec-pos" class="section-page space-y-6">
+                <div class="flex flex-col lg:flex-row gap-6 items-start">
+                    
+                    <!-- Columna Izquierda: Catálogo y Búsqueda de Productos -->
+                    <div class="w-full lg:w-7/12 space-y-4">
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-slate-900 text-lg font-heading flex items-center gap-2">
+                                    <i data-lucide="store" class="w-5 h-5 text-indigo-600"></i> Catálogo POS
+                                </h3>
+                                <span class="text-xs text-slate-400">Haz clic en una prenda para añadir al carrito</span>
+                            </div>
+                            
+                            <!-- Buscador rápido -->
+                            <div class="relative">
+                                <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3 text-slate-400"></i>
+                                <input type="text" id="pos-search-input" placeholder="Buscar prenda por SKU o Nombre..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <!-- Pills de Categoría rápida -->
+                            <div id="pos-category-pills" class="flex gap-2 overflow-x-auto pb-1 text-xs">
+                                <!-- Inyectado dinámicamente -->
+                            </div>
+                        </div>
+
+                        <!-- Grid de Prendas en POS -->
+                        <div id="pos-products-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[560px] overflow-y-auto pr-1">
+                            <!-- Inyectado desde app.js -->
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Carrito y Procesamiento de Pago -->
+                    <div class="w-full lg:w-5/12 bg-white rounded-2xl border border-slate-200/80 shadow-xl p-5 space-y-5 sticky top-20">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-5 h-5 text-indigo-600"></i>
+                                <h3 class="font-bold text-slate-900 text-lg font-heading">Carrito de Compra</h3>
+                            </div>
+                            <button onclick="app.clearCart()" class="text-xs font-semibold text-rose-500 hover:text-rose-700 transition-colors">
+                                Vaciar Carrito
+                            </button>
+                        </div>
+
+                        <!-- Lista de Ítems en el Carrito -->
+                        <div id="pos-cart-items" class="space-y-3 max-h-[260px] overflow-y-auto pr-1">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+
+                        <!-- Desglose de Totales -->
+                        <div class="border-t border-slate-100 pt-4 space-y-2 text-sm text-slate-600">
+                            <div class="flex justify-between">
+                                <span>Subtotal:</span>
+                                <span font-semibold text-slate-800 id="pos-subtotal">$0</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pos-tax-toggle" checked class="rounded text-indigo-600 focus:ring-indigo-500">
+                                    <span>IVA (19%):</span>
+                                </label>
+                                <span font-semibold text-slate-800 id="pos-tax">$0</span>
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-slate-500">Descuento ($):</span>
+                                <input type="number" id="pos-discount-input" value="0" min="0" class="w-24 px-2 py-1 bg-slate-50 border border-slate-200 rounded text-right text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                            </div>
+
+                            <div class="flex justify-between text-lg font-extrabold text-slate-900 border-t border-slate-200 pt-3">
+                                <span class="font-heading">TOTAL A PAGAR:</span>
+                                <span class="text-indigo-600 font-heading" id="pos-total">$0</span>
+                            </div>
+                        </div>
+
+                        <!-- Método de Pago y Verificación Manual -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-3">
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Método de Pago</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center justify-center gap-2 p-2.5 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50">
+                                    <input type="radio" name="paymentMethod" value="Efectivo" checked class="text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-xs font-bold text-slate-800">💵 Efectivo</span>
+                                </label>
+                                <label class="flex items-center justify-center gap-2 p-2.5 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-indigo-500 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50/50">
+                                    <input type="radio" name="paymentMethod" value="Transferencia" class="text-indigo-600 focus:ring-indigo-500">
+                                    <span class="text-xs font-bold text-slate-800">📱 Transferencia</span>
+                                </label>
+                            </div>
+
+                            <!-- Bloque de Verificación Manual (Obligatorio para Transferencia) -->
+                            <div id="pos-transfer-verification-box" class="hidden p-3 bg-amber-50 border border-amber-300 rounded-xl space-y-2">
+                                <p class="text-[11px] font-semibold text-amber-800 flex items-center gap-1.5">
+                                    <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i>
+                                    Verificación Obligatoria de Transferencia Bancaria
+                                </p>
+                                <label class="flex items-start gap-2 cursor-pointer">
+                                    <input type="checkbox" id="pos-transfer-check" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500 checkbox-transfer">
+                                    <span class="text-xs font-bold text-amber-900 leading-tight">
+                                        Verificación Manual de Transferencia Confirmada (Comprobante recibido y validado en banco).
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Botón Procesar Venta -->
+                        <button onclick="app.processSale()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 text-base transition-all">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span>Procesar Venta ($)</span>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 4: PROVEEDORES Y COMPRAS POR LOTE -->
+            <section id="sec-proveedores" class="section-page space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">🚚 Proveedores & Registro de Compras por Lote</h2>
+                        <p class="text-slate-500 text-sm">Gestiona proveedores de confección e ingresa lotes de mercancía al inventario.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="app.openSupplierModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5">
+                            <i data-lucide="user-plus" class="w-4 h-4"></i> Nuevo Proveedor
+                        </button>
+                        <button onclick="app.openBatchModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-indigo-600/30">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i> Registrar Lote
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Tabla de Proveedores -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base font-heading">Directorio de Proveedores</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                    <tr>
+                                        <th class="py-2.5 px-3">Proveedor / NIT</th>
+                                        <th class="py-2.5 px-3">Contacto</th>
+                                        <th class="py-2.5 px-3">Ciudad</th>
+                                        <th class="py-2.5 px-3 text-center">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="suppliers-tbody" class="divide-y divide-slate-100">
+                                    <!-- Inyectado desde app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Historial de Compras por Lote -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base font-heading">Historial de Lotes Ingresados</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                    <tr>
+                                        <th class="py-2.5 px-3">N° Lote / Factura</th>
+                                        <th class="py-2.5 px-3">Proveedor</th>
+                                        <th class="py-2.5 px-3">Fecha</th>
+                                        <th class="py-2.5 px-3 text-right">Costo Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="batches-tbody" class="divide-y divide-slate-100">
+                                    <!-- Inyectado desde app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 5: DEVOLUCIONES -->
+            <section id="sec-devoluciones" class="section-page space-y-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-5">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">🔄 Módulo de Devoluciones</h2>
+                        <p class="text-slate-500 text-sm">Busca un ticket de compra para reintegrar prendas al inventario.</p>
+                    </div>
+
+                    <!-- Buscador de Ticket -->
+                    <div class="flex gap-3 max-w-xl">
+                        <input type="text" id="return-search-ticket" placeholder="Ingrese N° Ticket (Ej. TCK-1001)..." class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button onclick="app.searchTicketForReturn()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-md">
+                            Buscar Ticket
+                        </button>
+                    </div>
+
+                    <!-- Resultado del Ticket y Panel de Procesar Devolución -->
+                    <div id="return-ticket-details" class="hidden border-t border-slate-200 pt-5 space-y-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-wrap justify-between gap-4 text-xs">
+                            <div>
+                                <span class="text-slate-400 block">Número de Ticket:</span>
+                                <strong class="text-sm font-bold text-slate-900" id="return-ticket-num">TCK-1001</strong>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Fecha Venta:</span>
+                                <strong class="text-sm font-semibold text-slate-800" id="return-ticket-date">-</strong>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Vendedor:</span>
+                                <strong class="text-sm font-semibold text-slate-800" id="return-ticket-seller">-</strong>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 block">Total Venta:</span>
+                                <strong class="text-sm font-extrabold text-indigo-600" id="return-ticket-total">$0</strong>
+                            </div>
+                        </div>
+
+                        <h4 class="font-bold text-slate-900 text-sm">Prendas de la Venta a Devolver:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-100 text-slate-600 font-bold uppercase text-[10px]">
+                                    <tr>
+                                        <th class="py-2 px-3">Seleccionar</th>
+                                        <th class="py-2 px-3">Prenda</th>
+                                        <th class="py-2 px-3 text-center">Cant. Comprada</th>
+                                        <th class="py-2 px-3 text-center">Cant. a Devolver</th>
+                                        <th class="py-2 px-3 text-right">Precio Unitario</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="return-items-tbody" class="divide-y divide-slate-100">
+                                    <!-- Inyectado dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Motivo de Devolución</label>
+                                <select id="return-reason-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-indigo-500">
+                                    <option value="Defecto de Fábrica">Defecto de Fábrica</option>
+                                    <option value="Talla Incorrecta">Talla Incorrecta / Cambio</option>
+                                    <option value="No Satisfecho">Cliente No Satisfecho</option>
+                                </select>
+                            </div>
+                            <div class="flex items-end">
+                                <button onclick="app.confirmReturn()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs shadow-md">
+                                    Confirmar Devolución e Reintegrar Stock
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historial de Devoluciones -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base font-heading">Historial de Devoluciones Procesadas</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="py-2.5 px-3">Ticket Origen</th>
+                                    <th class="py-2.5 px-3">Fecha Devolución</th>
+                                    <th class="py-2.5 px-3">Motivo</th>
+                                    <th class="py-2.5 px-3 text-right">Monto Reembolsado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="returns-history-tbody" class="divide-y divide-slate-100">
+                                <!-- Inyectado desde app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 6: CUENTAS & FINANZAS MENSUALES -->
+            <section id="sec-finanzas" class="section-page space-y-6">
+                <div>
+                    <h2 class="text-2xl font-bold font-heading text-slate-900">💰 Balance Contable & Finanzas Mensuales</h2>
+                    <p class="text-slate-500 text-sm">Resumen contable de ingresos por ventas vs. egresos acumulados por compras de lote.</p>
+                </div>
+
+                <!-- Balance Summary Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Ingresos Totales (Ventas)</p>
+                        <h3 class="text-2xl font-extrabold text-emerald-600 mt-1 font-heading" id="fin-total-income">$0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Acumulado en caja</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Egresos Totales (Compras Lote)</p>
+                        <h3 class="text-2xl font-extrabold text-rose-600 mt-1 font-heading" id="fin-total-expenses">$0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Inversión en mercancía</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Ganancia Neta Estimada</p>
+                        <h3 class="text-2xl font-extrabold text-slate-900 mt-1 font-heading" id="fin-net-profit">$0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Utilidad del periodo</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+                        <p class="text-xs font-bold text-slate-400 uppercase">Margen de Ganancia %</p>
+                        <h3 class="text-2xl font-extrabold text-indigo-600 mt-1 font-heading" id="fin-profit-margin">0%</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Retorno estimado</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Detalle Financiero -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base font-heading">Desglose de Movimientos Financieros</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="py-2.5 px-3">Fecha / Ref</th>
+                                    <th class="py-2.5 px-3">Tipo de Operación</th>
+                                    <th class="py-2.5 px-3">Detalle</th>
+                                    <th class="py-2.5 px-3 text-right">Monto ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="finance-ledger-tbody" class="divide-y divide-slate-100">
+                                <!-- Inyectado desde app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 7: GESTIÓN DE USUARIOS -->
+            <section id="sec-usuarios" class="section-page space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">👥 Gestión de Usuarios & Permisos</h2>
+                        <p class="text-slate-500 text-sm">Administra vendedores y administradores del sistema ERP.</p>
+                    </div>
+                    <button onclick="app.openUserModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2.5 rounded-xl font-semibold text-sm shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition-all">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Nuevo Usuario</span>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-wider border-b border-slate-100">
+                                <tr>
+                                    <th class="py-3.5 px-5">Nombre Completo</th>
+                                    <th class="py-3.5 px-5">Usuario / Correo</th>
+                                    <th class="py-3.5 px-5 text-center">Rol</th>
+                                    <th class="py-3.5 px-5 text-center">Estado</th>
+                                    <th class="py-3.5 px-5 text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-tbody" class="divide-y divide-slate-100">
+                                <!-- Inyectado desde app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECCIÓN 8: REPORTES & ANALÍTICA -->
+            <section id="sec-reportes" class="section-page space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold font-heading text-slate-900">📈 Reportes & Analítica de Ventas</h2>
+                        <p class="text-slate-500 text-sm">Filtra estadísticas comerciales y detecta productos críticos para reabastecimiento.</p>
+                    </div>
+
+                    <!-- Filtro Rango de Fechas -->
+                    <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2 text-xs">
+                        <span class="font-semibold text-slate-600 pl-2">Desde:</span>
+                        <input type="date" id="rep-date-from" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                        <span class="font-semibold text-slate-600">Hasta:</span>
+                        <input type="date" id="rep-date-to" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                        <button onclick="app.renderReports()" class="bg-indigo-600 text-white font-semibold px-3 py-1.5 rounded-lg hover:bg-indigo-500">
+                            Filtrar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Top Productos Más Vendidos -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base font-heading flex items-center gap-2">
+                            <i data-lucide="award" class="w-5 h-5 text-amber-500"></i> Top Prendas Más Vendidas
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                    <tr>
+                                        <th class="py-2.5 px-3">Prenda</th>
+                                        <th class="py-2.5 px-3 text-center">Unidades Vendidas</th>
+                                        <th class="py-2.5 px-3 text-right">Recaudado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-top-products-tbody" class="divide-y divide-slate-100">
+                                    <!-- Inyectado desde app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Reporte de Stock Crítico / Reabastecimiento -->
+                    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 space-y-4">
+                        <h3 class="font-bold text-slate-900 text-base font-heading flex items-center gap-2">
+                            <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-500"></i> Reporte de Stock Crítico
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs text-slate-600">
+                                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider">
+                                    <tr>
+                                        <th class="py-2.5 px-3">SKU / Prenda</th>
+                                        <th class="py-2.5 px-3 text-center">Stock Actual</th>
+                                        <th class="py-2.5 px-3 text-center">Sugerido Compra</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-critical-stock-tbody" class="divide-y divide-slate-100">
+                                    <!-- Inyectado desde app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+
+    <!-- ==================== MODALES REUTILIZABLES ==================== -->
+
+    <!-- MODAL 1: CREAR / EDITAR PRODUCTO -->
+    <div id="modal-product" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl z-10 space-y-5 transform transition-all">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 id="modal-product-title" class="font-bold text-slate-900 text-lg font-heading">Nuevo Producto / Prenda</h3>
+                <button onclick="app.closeModal('modal-product')" class="text-slate-400 hover:text-slate-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="form-product" class="space-y-4 text-xs">
+                <input type="hidden" id="prod-id">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">SKU / Código de Barras</label>
+                        <input type="text" id="prod-sku" required placeholder="Ej. CAM-NE-M" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Nombre de la Prenda</label>
+                        <input type="text" id="prod-name" required placeholder="Ej. Blusa de Lino..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Marca</label>
+                        <input type="text" id="prod-brand" required placeholder="Ej. Urban Chic" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Categoría</label>
+                        <select id="prod-category" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            <!-- Inyectado dinámicamente -->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Talla</label>
+                        <select id="prod-size" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            <!-- Inyectado dinámicamente -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Color</label>
+                        <input type="text" id="prod-color" required placeholder="Negro" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Cantidad (Stock)</label>
+                        <input type="number" id="prod-stock" min="0" required value="10" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Costo de Compra ($)</label>
+                        <input type="number" id="prod-cost" min="0" required placeholder="25000" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Precio de Venta ($)</label>
+                        <input type="number" id="prod-price" min="0" required placeholder="65000" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-3 border-t border-slate-100">
+                    <button type="button" onclick="app.closeModal('modal-product')" class="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL 2: CREAR PROVEEDOR -->
+    <div id="modal-supplier" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl z-10 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 text-lg font-heading">Registrar Nuevo Proveedor</h3>
+                <button onclick="app.closeModal('modal-supplier')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-supplier" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Nombre / Razón Social</label>
+                    <input type="text" id="sup-name" required placeholder="Ej. Textiles Moda S.A.S." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">NIT / RUT</label>
+                    <input type="text" id="sup-nit" required placeholder="900.123.456-7" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Teléfono</label>
+                        <input type="text" id="sup-phone" required placeholder="+57 300 000 0000" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Ciudad</label>
+                        <input type="text" id="sup-city" required placeholder="Bogotá" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Correo Electrónico</label>
+                    <input type="email" id="sup-email" required placeholder="proveedor@empresa.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="flex justify-end gap-3 pt-3">
+                    <button type="button" onclick="app.closeModal('modal-supplier')" class="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md">Guardar Proveedor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL 3: REGISTRO DE COMPRA POR LOTE -->
+    <div id="modal-batch" class="fixed inset-0 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl z-10 space-y-4 my-8">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 text-lg font-heading">📦 Ingresar Compra de Lote a Inventario</h3>
+                <button onclick="app.closeModal('modal-batch')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-batch" class="space-y-4 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Proveedor</label>
+                        <select id="batch-supplier" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            <!-- Inyectado dinámicamente -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">N° Lote / Factura de Proveedor</label>
+                        <input type="text" id="batch-ref" required placeholder="Ej. FAC-2026-99" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-xl p-3 bg-slate-50 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-slate-800">Prendas a incluir en el lote:</span>
+                        <button type="button" onclick="app.addBatchRow()" class="text-indigo-600 hover:text-indigo-800 font-bold text-xs">+ Añadir otra prenda</button>
+                    </div>
+
+                    <div id="batch-items-container" class="space-y-2">
+                        <!-- Filas de lote inyectadas dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center font-bold text-sm text-slate-900 border-t border-slate-100 pt-3">
+                    <span>COSTO TOTAL DEL LOTE:</span>
+                    <span id="batch-total-cost-display" class="text-indigo-600 text-base font-extrabold">$0</span>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="app.closeModal('modal-batch')" class="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md">Guardar Lote e Incrementar Stock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL 4: RECIBO / TICKET DE VENTA (IMPRIMIBLE) -->
+    <div id="modal-ticket" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl z-10 space-y-4 text-center">
+            <div class="no-print flex items-center justify-between border-b border-slate-100 pb-3">
+                <span class="font-bold text-slate-900 text-sm">Ticket de Venta Generado</span>
+                <button onclick="app.closeModal('modal-ticket')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <!-- CONTENIDO TICKET FORMATO TÉRMICO -->
+            <div id="printable-ticket" class="ticket-paper text-left text-xs">
+                <!-- Inyectado dinámicamente desde app.js -->
+            </div>
+
+            <div class="no-print flex gap-2 pt-2">
+                <button onclick="window.print()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-2">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Imprimir Ticket
+                </button>
+                <button onclick="app.closeModal('modal-ticket')" class="px-4 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL 5: CREAR / EDITAR USUARIO -->
+    <div id="modal-user" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="relative bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl z-10 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="font-bold text-slate-900 text-lg font-heading">Registrar Nuevo Usuario</h3>
+                <button onclick="app.closeModal('modal-user')" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="form-user" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Nombre Completo</label>
+                    <input type="text" id="usr-fullname" required placeholder="Ej. Ana María Martínez" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">Correo Electrónico</label>
+                    <input type="email" id="usr-email" required placeholder="ana.ventas@voguestyle.com" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Usuario</label>
+                        <input type="text" id="usr-username" required placeholder="vendedor_ana" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 mb-1">Rol de Acceso</label>
+                        <select id="usr-role" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500">
+                            <option value="Vendedor">Vendedor</option>
+                            <option value="Administrador">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-3 pt-3">
+                    <button type="button" onclick="app.closeModal('modal-user')" class="px-4 py-2 text-slate-600 font-semibold hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-md">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- CONTENEDOR DE TOAST NOTIFICATIONS -->
+    <div id="toast-container"></div>
+
+
+    <!-- CARGA DE SCRIPTS -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
