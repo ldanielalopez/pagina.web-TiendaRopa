@@ -1,25 +1,208 @@
-/* styles.css - Personalizaciones y Estilos Específicos para Vogue & Style Boutique */
+/* styles.css - Esquema Pastel Elegante y Moderno con Google Fonts (Poppins) */
+/* Paleta: Fondo Blanco #FFFFFF, Sidebar & Bienvenida #A38CE7, Widgets #B2A2DE, Gráficas #93CDED, Texto #000000 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 :root {
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --color-brand-primary: #4f46e5;
-    --color-brand-accent: #e11d48;
-    --color-bg-dark: #0f172a;
-    --color-surface: #ffffff;
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    
+    /* ========================================== */
+    /* PALETA PASTEL DE ALTO CONTRASTE */
+    /* ========================================== */
+    --color-bg-base: #FFFFFF;             /* Blanco puro para fondo general */
+    --color-bg-subtle: #F8F9FE;           /* Fondo gris/azul muy suave para contraste */
+    --color-card-bg: #F4F0FD;             /* Lavanda ultraclaro para fondos de tarjetas */
+    --color-widget-lavender: #B2A2DE;     /* Lavanda suave para widgets */
+    --color-primary-purple: #A38CE7;      /* Púrpura / Violeta medio */
+    --color-accent-blue: #93CDED;         /* Azul celeste claro para gráficas y acentos */
+    --color-text-main: #000000;           /* Negro para máxima legibilidad */
+    --color-text-muted: #475569;          /* Gris oscuro para subtítulos */
+    --color-border-subtle: #E2DCF8;       /* Borde suave armonioso */
+    --color-border-accent: #B2A2DE;       /* Borde acentuado */
+
+    /* Alertas y Estados en Tonos Pastel Notables */
+    --color-alert-red-bg: #FEE2E2;
+    --color-alert-red-border: #FCA5A5;
+    --color-alert-red-text: #991B1B;
+
+    --color-alert-yellow-bg: #FEF08A;
+    --color-alert-yellow-border: #FACC15;
+    --color-alert-yellow-text: #854D0E;
+
+    --color-alert-green-bg: #D1FAE5;
+    --color-alert-green-border: #6EE7B7;
+    --color-alert-green-text: #065F46;
+
+    --color-alert-blue-bg: #E0F2FE;
+    --color-alert-blue-border: #93CDED;
+    --color-alert-blue-text: #075985;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: var(--font-body);
-    background-color: #f8fafc;
-    color: #1e293b;
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-    font-family: var(--font-heading);
+    font-family: 'Poppins', sans-serif;
+    color: #000000;
+}
+
+/* ========================================== */
+/* COMPONENTES BASE Y WIDGETS */
+/* ========================================== */
+
+.dashboard-widget {
+    background-color: #F8F6FE;
+    border: 1px solid #D6CEF3;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px -2px rgba(163, 140, 231, 0.12);
+    padding: 20px;
+    transition: all 0.25s ease;
+}
+
+.dashboard-widget:hover {
+    box-shadow: 0 6px 20px -2px rgba(163, 140, 231, 0.18);
+    border-color: #B2A2DE;
+}
+
+.widget-lavender {
+    background-color: #B2A2DE;
+    color: #000000;
+    border: 1px solid #9D8CCF;
+}
+
+.btn-primary {
+    background-color: #A38CE7;
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(163, 140, 231, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #8F77D9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(163, 140, 231, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: #93CDED;
+    color: #000000;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(147, 205, 237, 0.3);
+}
+
+.btn-secondary:hover {
+    background-color: #7EBEE2;
+    transform: translateY(-1px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #000000;
+    border: 1.5px solid #A38CE7;
+    border-radius: 12px;
+    padding: 9px 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-outline:hover {
+    background-color: #F4F0FD;
+    border-color: #8F77D9;
+}
+
+.btn-danger {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FCA5A5;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-danger:hover {
+    background-color: #FCA5A5;
+    color: #7F1D1D;
+}
+
+/* Alertas Notables en Tonos Pastel */
+.alert-warning {
+    background-color: #FEF08A;
+    color: #854D0E;
+    border: 1px solid #FACC15;
+    padding: 10px 14px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.alert-danger {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FCA5A5;
+    padding: 10px 14px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.alert-success {
+    background-color: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #6EE7B7;
+    padding: 10px 14px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.alert-info {
+    background-color: #E0F2FE;
+    color: #075985;
+    border: 1px solid #93CDED;
+    padding: 10px 14px;
+    font-weight: 600;
+    border-radius: 10px;
 }
 
 /* Custom Scrollbar */
@@ -28,36 +211,49 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     height: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #f1f5f9;
+    background: #FFFFFF;
 }
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #D6CEF3;
     border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #B2A2DE;
 }
 
-/* Nav links active state */
+/* ========================================== */
+/* BARRA LATERAL (PÚRPURA / VIOLETA #A38CE7) */
+/* ========================================== */
+#sidebar {
+    background-color: #A38CE7;
+    border-right: 1px solid #927BD8;
+    box-shadow: 2px 0 15px rgba(163, 140, 231, 0.18);
+}
+
 .nav-link {
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
+    color: #FFFFFF;
+}
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
 }
 .nav-link.active {
-    background-color: #4f46e5;
-    color: #ffffff !important;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    background-color: #FFFFFF;
+    color: #000000 !important;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-.nav-link.active svg {
-    color: #ffffff !important;
+.nav-link.active svg, .nav-link.active i {
+    color: #A38CE7 !important;
 }
 
-/* Section Switching Animations */
+/* Transiciones de Secciones SPA */
 .section-page {
     display: none;
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(4px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
 .section-page.active-section {
     display: block;
@@ -65,122 +261,184 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     transform: translateY(0);
 }
 
-/* Glassmorphism & Custom Cards */
-.glass-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(226, 232, 240, 0.8);
+/* Tarjetas Limpias */
+.clean-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E2DCF8;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(163, 140, 231, 0.06);
 }
 
-/* Stock Badges */
+/* Badges de Estado */
 .badge-stock-ok {
-    background-color: #ecfdf5;
-    color: #047857;
-    border: 1px solid #a7f3d0;
+    background-color: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #6EE7B7;
 }
 .badge-stock-warning {
-    background-color: #fffbeb;
-    color: #b45309;
-    border: 1px solid #fde68a;
+    background-color: #FEF08A;
+    color: #854D0E;
+    border: 1px solid #FACC15;
 }
 .badge-stock-critical {
-    background-color: #fef2f2;
-    color: #b91c1c;
-    border: 1px solid #fecaca;
-    animation: pulse-border 2s infinite;
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border: 1px solid #FCA5A5;
 }
 
-@keyframes pulse-border {
-    0%, 100% { border-color: #fecaca; }
-    50% { border-color: #ef4444; }
+.badge-dian-ok {
+    background-color: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #6EE7B7;
+}
+.badge-dian-pending {
+    background-color: #FEF08A;
+    color: #854D0E;
+    border: 1px solid #FACC15;
 }
 
-/* Toast Notifications */
-#toast-container {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+/* Tablas con Bordes Pastel */
+table th {
+    font-weight: 700;
+    color: #000000;
+}
+table tbody tr {
+    transition: background-color 0.15s ease;
+}
+table tbody tr:hover {
+    background-color: #F8F6FE;
+}
+
+/* Modales */
+.modal-container {
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 0.25s ease-out;
 }
-.toast {
+.modal-container.active-modal {
+    opacity: 1;
     pointer-events: auto;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1.25rem;
-    border-radius: 0.75rem;
-    background: #ffffff;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid;
-    transform: translateX(100%);
-    animation: slideInRight 0.3s forwards ease-out;
 }
-.toast.toast-success { border-left-color: #10b981; }
-.toast.toast-error { border-left-color: #ef4444; }
-.toast.toast-warning { border-left-color: #f59e0b; }
-.toast.toast-info { border-left-color: #3b82f6; }
-
-@keyframes slideInRight {
-    to { transform: translateX(0); }
-}
-
-/* Modal Animations & Backdrop */
 .modal-backdrop {
-    background-color: rgba(15, 23, 42, 0.6);
+    background-color: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(4px);
     transition: opacity 0.25s ease-out;
 }
 
-/* Ticket de Venta Formato Térmico */
+/* ========================================== */
+/* TICKET DE VENTA & FACTURA ELECTRÓNICA DIAN */
+/* ========================================== */
 .ticket-paper {
     font-family: 'Courier New', Courier, monospace;
-    background-color: #fff;
-    color: #000;
+    background-color: #ffffff;
+    color: #000000;
     width: 100%;
-    max-width: 380px;
+    max-width: 320px;
     margin: 0 auto;
-    padding: 20px;
-    border: 1px dashed #ccc;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 16px 14px;
+    border: 1px dashed #B2A2DE;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-size: 11px;
+    line-height: 1.35;
+}
+
+@page {
+    size: auto;
+    margin: 4mm;
 }
 
 @media print {
+    html, body {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+    
     body * {
-        visibility: hidden;
+        visibility: hidden !important;
     }
+    
     #printable-ticket, #printable-ticket * {
-        visibility: visible;
+        visibility: visible !important;
     }
+    
     #printable-ticket {
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-        border: none;
+        left: 50% !important;
+        top: 0 !important;
+        transform: translateX(-50%) !important;
+        width: 100% !important;
+        max-width: 80mm !important;
+        padding: 4mm !important;
+        margin: 0 auto !important;
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+        font-family: 'Courier New', Courier, monospace !important;
+        font-size: 10.5px !important;
+        line-height: 1.25 !important;
+        color: #000000 !important;
+        background: #ffffff !important;
     }
+    
     .no-print {
         display: none !important;
     }
 }
 
-/* POS Item Cards */
+/* POS Layout y Tarjetas de Producto */
 .pos-product-card {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
+    border: 1px solid #E2DCF8;
+    background-color: #FFFFFF;
 }
 .pos-product-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.15);
+    border-color: #A38CE7 !important;
+    box-shadow: 0 6px 16px rgba(163, 140, 231, 0.15);
 }
 
-/* Checkbox estilizado para verificación manual de transferencia */
-.checkbox-transfer:checked {
-    background-color: #059669;
-    border-color: #059669;
+.pos-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.pos-catalog {
+    flex: 1;
+    min-width: 0;
+}
+
+.pos-cart {
+    flex: 0 0 auto;
+    max-width: 380px;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    border: 1px solid #D6CEF3;
+    box-shadow: 0 4px 15px rgba(163, 140, 231, 0.08);
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 250px;
+}
+
+/* Responsividad Multi-dispositivo */
+@media (max-width: 1200px) {
+    .pos-cart { max-width: 330px; }
+}
+
+@media (max-width: 992px) {
+    .pos-cart { max-width: 300px; font-size: 14px; }
+}
+
+@media (max-width: 768px) {
+    .pos-layout { flex-direction: column; }
+    .pos-cart { max-width: 100%; width: 100%; font-size: 14px; }
+    .dashboard-widget { margin-bottom: 12px; font-size: 14px; }
+    .btn-primary, .btn-secondary, .btn-outline { width: 100%; }
 }

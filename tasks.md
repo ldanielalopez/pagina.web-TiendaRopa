@@ -31,3 +31,11 @@
 - [x] **Fase 5: Pruebas y Verificación**
   - [x] Servidor local iniciado en `http://localhost:8080`.
   - [x] Verificado el ciclo comercial completo: Registro -> Inventario -> Compra por Lote -> Venta POS -> Ticket -> Devolución -> Balance Financiero.
+
+- [x] **Fase 6: Nuevas Funcionalidades & Anexos**
+  - [x] **Gráficas de Ventas Mensuales**: Integración de Chart.js en el Dashboard con evolución mensual comparativa (Barra/Línea) y distribución de ventas por categoría (Doughnut).
+  - [x] **Tiquete Térmico de 2 Pulgadas (58mm)**: Reglas `@page` y `@media print` para impresión exacta en impresoras de caja POS estándar de 2 pulgadas sin desbordar en hojas carta.
+  - [x] **Registro Manual de Compra / Entrada a Inventario**: Nuevo módulo y modal para ingresar compras manualmente con creación automática o actualización de stock por SKU y registro contable.
+  - [x] **Paleta de Colores Confortable y Suave**: Diseño visual refinado con tonos pasteles descansados, excelente contraste (WCAG AA/AAA) y estética moderna.
+  - [x] **Control de Roles y Permisos Estrictos**: Restricción de acceso para el rol Vendedor (ocultamiento en sidebar y bloqueo de rutas para Gestión de Usuarios, Reportes & Analítica, y Cuentas & Finanzas, exclusivos para Administrador).
+
