@@ -1,7 +1,7 @@
 /**
  * app.js - Motor Lógico SPA para Vogue & Style Boutique ERP & POS
  * Esquema visual Pastel (#FFFFFF, #A38CE7, #B2A2DE, #93CDED, #000000)
- * Sistema de Autenticación, Gestión de Trabajadores, Perfil de Usuario, Facturación Electrónica DIAN y POS Adaptable.
+ * Sistema de Autenticación, Gestión de Trabajadores, Perfil de Usuario, Facturación y POS Adaptable.
  */
 
 class AppEngine {
@@ -483,7 +483,7 @@ class AppEngine {
             devoluciones: '🔄 Devoluciones & Garantías',
             finanzas: '💰 Cuentas & Finanzas Mensuales',
             usuarios: '👥 Gestión de Usuarios y Trabajadores',
-            reportes: '📈 Reportes, Analítica & DIAN'
+            reportes: '📈 Reportes & Analítica'
         };
         const headerTitle = document.getElementById('header-current-section-title');
         if (headerTitle) headerTitle.textContent = titles[sectionId] || 'Vogue & Style';
@@ -712,11 +712,6 @@ class AppEngine {
                 </td>
                 <td class="py-3 px-5 font-semibold text-[#000000]">${sale.items ? sale.items.reduce((a, b) => a + b.quantity, 0) : 0} prendas</td>
                 <td class="py-3 px-5 text-right font-extrabold text-[#000000]">${this.formatMoney(sale.total)}</td>
-                <td class="py-3 px-5 text-center">
-                    <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]">
-                        ✅ Validada DIAN
-                    </span>
-                </td>
                 <td class="py-3 px-5 text-right">
                     <button onclick="app.viewTicketModal('${sale.id}')" class="btn-primary text-xs py-1 px-3">
                         Ver Factura
@@ -1176,18 +1171,11 @@ class AppEngine {
         const total = Math.max(0, subtotal + tax - discount);
 
         const ticketNum = `TCK-${sales.length + 1001}`;
-        const dianInvoiceNum = `SETT-${1000 + sales.length + 1}`;
         const now = new Date();
-
-        // Generar CUFE (Código Único de Facturación Electrónica simulado)
-        const cufeHash = Array.from({length: 40}, () => Math.floor(Math.random()*16).toString(16)).join('');
 
         const newSale = {
             id: ticketNum,
             ticketNumber: ticketNum,
-            dianInvoiceNumber: dianInvoiceNum,
-            cufe: cufeHash,
-            dianStatus: 'Aceptada DIAN',
             date: now.toISOString(),
             dateFormatted: now.toLocaleString('es-CO'),
             sellerName: this.activeUser ? this.activeUser.fullName : 'Vendedor',
@@ -1219,7 +1207,7 @@ class AppEngine {
         this.renderPosProducts();
         this.renderInventory();
         this.updateLowStockBadge();
-        this.showToast(`¡Venta ${ticketNum} (${dianInvoiceNum}) emitida con éxito!`, 'success');
+        this.showToast(`¡Venta ${ticketNum} emitida con éxito!`, 'success');
     }
 
     renderTicketContent(sale) {
@@ -1232,9 +1220,6 @@ class AppEngine {
         const container = document.getElementById('printable-ticket');
         if (!container) return;
 
-        const dianNum = sale.dianInvoiceNumber || `SETT-1001`;
-        const cufe = sale.cufe || 'a8f4c19b2e04d773f8a192c4b8e0192a8374d619';
-
         container.innerHTML = `
             <div class="text-center font-bold pb-2 mb-2 border-b border-dashed border-[#000000]">
                 <h4 class="text-xs uppercase tracking-wider font-extrabold">${storeInfo.name}</h4>
@@ -1242,7 +1227,7 @@ class AppEngine {
                 <p class="text-[9px] font-normal">${storeInfo.address}</p>
                 <p class="text-[9px] font-normal">TEL: ${storeInfo.phone}</p>
                 <div class="mt-1 px-1.5 py-0.5 bg-[#D1FAE5] text-[#065F46] rounded text-[8px] font-bold inline-block border border-[#6EE7B7]">
-                    FACTURA ELECTRÓNICA DE VENTA: ${dianNum}
+                    FACTURA DE VENTA: ${sale.ticketNumber}
                 </div>
             </div>
 
@@ -1280,21 +1265,10 @@ class AppEngine {
                 <p class="flex justify-between text-xs font-black border-t border-[#000000] pt-1 mt-1"><span>TOTAL:</span> <span>${this.formatMoney(sale.total)}</span></p>
             </div>
 
-            <!-- SECCIÓN FISCAL DIAN -->
-            <div class="p-2 bg-[#F8F6FE] rounded border border-[#B2A2DE] text-[8px] space-y-1 mb-2">
-                <p class="font-bold text-[#000000]">INFORMACIÓN FISCAL DIAN:</p>
-                <p class="text-[#475569] leading-tight">Resolución DIAN N° 18764000001 de 2026-01-01. Rango Habilitado: SETT-1 a SETT-100000.</p>
-                <p class="break-all font-mono text-[7px] text-[#000000]"><strong>CUFE:</strong> ${cufe}</p>
-                <div class="flex items-center justify-between pt-1">
-                    <span class="font-bold text-[#065F46]">✅ Transmitida a la DIAN</span>
-                    <span class="font-mono text-[8px]">QR DIAN: [VPFE-VALID]</span>
-                </div>
-            </div>
-
             <div class="text-center text-[9px] pt-1 border-t border-dashed border-[#000000] space-y-0.5">
                 <p class="font-bold uppercase tracking-tight">¡GRACIAS POR TU COMPRA!</p>
                 <p class="text-[8px]">Garantía y cambios: 15 días presentando este tiquete.</p>
-                <p class="text-[7.5px] text-[#475569]">Documento equivalente a factura electrónica expedido conforme a la ley colombiana.</p>
+                <p class="text-[7.5px] text-[#475569]">Documento equivalente a factura expedido conforme a la ley colombiana.</p>
             </div>
         `;
 
@@ -1307,17 +1281,6 @@ class AppEngine {
         if (sale) {
             this.renderTicketContent(sale);
         }
-    }
-
-    transmitDianInvoices() {
-        this.showToast('Conectando con servidores de la DIAN...', 'info');
-        setTimeout(() => {
-            const sales = this.getStorage('sales') || [];
-            sales.forEach(s => s.dianStatus = 'Aceptada DIAN');
-            this.setStorage('sales', sales);
-            this.showToast('✅ Facturas del día transmitidas y aceptadas exitosamente por la DIAN.', 'success');
-            if (this.currentSection === 'dashboard') this.renderDashboard();
-        }, 1200);
     }
 
     // ==========================================
@@ -1380,44 +1343,43 @@ class AppEngine {
         document.getElementById('form-batch')?.reset();
         this.batchItems = [];
         this.renderBatchItems();
-
-        const products = this.getStorage('products') || [];
-        const prodSelect = document.getElementById('batch-item-product');
-        if (prodSelect) {
-            prodSelect.innerHTML = products.map(p => `<option value="${p.id}">${p.name} (${p.sku})</option>`).join('');
-        }
-
         this.openModal('modal-batch');
     }
 
     addItemToBatch() {
-        const prodSelect = document.getElementById('batch-item-product');
+        const nameInput = document.getElementById('batch-item-name');
         const qtyInput = document.getElementById('batch-item-qty');
         const costInput = document.getElementById('batch-item-cost');
+        const detailsInput = document.getElementById('batch-item-details');
 
-        const prodId = prodSelect?.value;
+        const productName = nameInput?.value?.trim();
         const qty = parseInt(qtyInput?.value);
         const cost = parseFloat(costInput?.value);
+        const details = detailsInput?.value?.trim() || '';
 
-        if (!prodId || isNaN(qty) || qty <= 0 || isNaN(cost) || cost < 0) {
+        if (!productName) {
+            this.showToast('Escribe el nombre del producto', 'warning');
+            return;
+        }
+
+        if (isNaN(qty) || qty <= 0 || isNaN(cost) || cost < 0) {
             this.showToast('Ingresa cantidad y costo válidos', 'warning');
             return;
         }
 
-        const products = this.getStorage('products') || [];
-        const prod = products.find(p => p.id === prodId);
-
         this.batchItems.push({
-            productId: prod.id,
-            sku: prod.sku,
-            productName: prod.name,
+            productName,
             quantity: qty,
             unitCost: cost,
+            details,
             totalCost: qty * cost
         });
 
-        qtyInput.value = '';
-        costInput.value = '';
+        if (nameInput) nameInput.value = '';
+        if (qtyInput) qtyInput.value = '';
+        if (costInput) costInput.value = '';
+        if (detailsInput) detailsInput.value = '';
+
         this.renderBatchItems();
     }
 
@@ -1432,11 +1394,12 @@ class AppEngine {
             return `
                 <tr>
                     <td class="p-1 font-bold text-[#000000]">${item.productName}</td>
+                    <td class="p-1 text-[#475569] text-[11px]">${item.details || '-'}</td>
                     <td class="p-1 text-center font-bold">${item.quantity}</td>
                     <td class="p-1 text-right">${this.formatMoney(item.unitCost)}</td>
                     <td class="p-1 text-right font-bold">${this.formatMoney(item.totalCost)}</td>
                     <td class="p-1 text-center">
-                        <button type="button" onclick="app.removeBatchItem(${idx})" class="text-[#991B1B] font-bold">×</button>
+                        <button type="button" onclick="app.removeBatchItem(${idx})" class="text-[#991B1B] font-bold hover:opacity-70 text-sm">×</button>
                     </td>
                 </tr>
             `;
@@ -1465,14 +1428,34 @@ class AppEngine {
         const supplier = suppliers.find(s => s.id === supId);
         const totalCost = this.batchItems.reduce((sum, item) => sum + item.totalCost, 0);
 
-        // Incrementar stock en productos
+        // Incrementar o crear productos en inventario
         this.batchItems.forEach(item => {
-            const p = products.find(prod => prod.id === item.productId);
+            let p = products.find(prod => prod.name.toLowerCase() === item.productName.toLowerCase());
             if (p) {
                 p.stock += item.quantity;
                 p.costPrice = item.unitCost;
+            } else {
+                const generatedSku = `PROD-${Date.now().toString().slice(-4)}-${Math.floor(Math.random()*100)}`;
+                const newProduct = {
+                    id: `PROD-${Date.now().toString().slice(-4)}-${Math.floor(Math.random()*100)}`,
+                    sku: generatedSku,
+                    name: item.productName,
+                    brand: supplier ? supplier.name.split(' ')[0] : 'Marca Boutique',
+                    category: item.details || 'Camisetas & Tops',
+                    size: 'M',
+                    color: 'Varios',
+                    stock: item.quantity,
+                    minStock: 5,
+                    costPrice: item.unitCost,
+                    salePrice: Math.round(item.unitCost * 1.5) || 50000,
+                    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&q=80'
+                };
+                products.unshift(newProduct);
+                item.productId = newProduct.id;
+                item.sku = newProduct.sku;
             }
         });
+
         this.setStorage('products', products);
 
         const newBatch = {
@@ -1617,7 +1600,7 @@ class AppEngine {
         }
 
         this.currentReturnSale = sale;
-        document.getElementById('ret-sale-tck-num').textContent = `${sale.ticketNumber} (${sale.dianInvoiceNumber || 'Factura DIAN'})`;
+        document.getElementById('ret-sale-tck-num').textContent = `Tiquete N° ${sale.ticketNumber}`;
         document.getElementById('ret-sale-date').textContent = `Fecha: ${sale.dateFormatted || sale.date}`;
         document.getElementById('ret-sale-total').textContent = `Total Facturado: ${this.formatMoney(sale.total)}`;
         if (details) details.classList.remove('hidden');

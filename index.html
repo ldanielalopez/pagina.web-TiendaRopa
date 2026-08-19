@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vogue & Style Boutique | ERP & POS Pastel</title>
-    <meta name="description" content="Sistema interactivo de punto de venta, inventario, facturación electrónica DIAN y gestión de trabajadores para boutique.">
+    <meta name="description" content="Sistema interactivo de punto de venta, inventario, facturación electrónica y gestión de trabajadores para boutique.">
     
     <!-- Google Fonts (Poppins) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -158,28 +158,28 @@
         <!-- OVERLAY NAVEGACIÓN MÓVIL -->
         <div id="mobile-overlay" class="fixed inset-0 bg-[#000000]/40 backdrop-blur-xs z-40 hidden md:hidden transition-opacity" onclick="app.closeMobileMenu()"></div>
 
-        <!-- SIDEBAR NAVEGACIÓN (PÚRPURA / VIOLETA #A38CE7) -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-[#A38CE7] text-white flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-[#8F77D9] shadow-xl">
+        <!-- SIDEBAR NAVEGACIÓN (#948CAD) -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-[#948CAD] text-[#000000] flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-[#837B9C] shadow-xl">
             
             <!-- Sidebar Header / Logo Clickable que lleva al Dashboard -->
-            <div class="h-16 flex items-center justify-between px-6 border-b border-[#8F77D9] bg-[#8F77D9]">
+            <div class="h-16 flex items-center justify-between px-6 border-b border-[#837B9C] bg-[#837B9C]">
                 <button onclick="app.navigateTo('dashboard')" class="flex items-center gap-3 text-left focus:outline-none group">
-                    <div class="w-10 h-10 rounded-xl bg-white text-[#A38CE7] flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
-                        <i data-lucide="shirt" class="w-5 h-5 text-[#A38CE7]"></i>
+                    <div class="w-10 h-10 rounded-xl bg-white text-[#948CAD] flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform">
+                        <i data-lucide="shirt" class="w-5 h-5 text-[#948CAD]"></i>
                     </div>
                     <div>
-                        <h1 class="font-bold text-white tracking-wide text-lg font-heading leading-tight group-hover:text-[#F8F6FE]">Vogue & Style</h1>
-                        <span class="text-[10px] text-[#E2DCF8] font-semibold tracking-wider uppercase">Boutique ERP & POS</span>
+                        <h1 class="font-bold text-[#000000] tracking-wide text-lg font-heading leading-tight group-hover:text-[#222222]">Vogue & Style</h1>
+                        <span class="text-[10px] text-[#000000] font-bold tracking-wider uppercase">Boutique ERP & POS</span>
                     </div>
                 </button>
-                <button id="close-mobile-menu" onclick="app.closeMobileMenu()" class="md:hidden text-white hover:text-[#E2DCF8] p-1">
+                <button id="close-mobile-menu" onclick="app.closeMobileMenu()" class="md:hidden text-[#000000] hover:text-[#333333] p-1">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
 
             <!-- Sidebar Navigation Menu -->
             <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-                <div class="px-3 pb-2 text-[10px] font-bold text-[#E2DCF8] uppercase tracking-wider">Menú Principal</div>
+                <div class="px-3 pb-2 text-[10px] font-bold text-[#000000] uppercase tracking-wider">Menú Principal</div>
                 
                 <a href="#dashboard" data-section="dashboard" onclick="app.navigateTo('dashboard')" class="nav-link active flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all group">
                     <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
@@ -209,7 +209,7 @@
                     <span>🔄 Devoluciones</span>
                 </a>
 
-                <div id="nav-admin-section-title" class="pt-4 px-3 pb-2 text-[10px] font-bold text-[#E2DCF8] uppercase tracking-wider">Gestión & Reportes (Admin)</div>
+                <div id="nav-admin-section-title" class="pt-4 px-3 pb-2 text-[10px] font-bold text-[#000000] uppercase tracking-wider">Gestión & Reportes (Admin)</div>
 
                 <!-- Cuentas & Finanzas (Solo visible para rol ADMINISTRADOR) -->
                 <a href="#finanzas" data-section="finanzas" id="nav-finanzas" onclick="app.navigateTo('finanzas')" class="nav-link flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all group">
@@ -231,12 +231,12 @@
             </nav>
 
             <!-- Sidebar Footer / Store Status -->
-            <div class="p-4 border-t border-[#8F77D9] bg-[#8F77D9]">
-                <div class="bg-[#A38CE7] rounded-xl p-3 flex items-center gap-3 border border-[#C7B9F1]">
+            <div class="p-4 border-t border-[#837B9C] bg-[#837B9C]">
+                <div class="bg-[#948CAD] rounded-xl p-3 flex items-center gap-3 border border-[#837B9C]">
                     <div class="w-2.5 h-2.5 rounded-full bg-[#93CDED] animate-pulse"></div>
                     <div class="text-xs">
-                        <p class="font-bold text-white" id="store-name-display">Vogue & Style Boutique</p>
-                        <p class="text-[#E2DCF8] text-[11px]" id="store-nit-display">NIT: 900.854.123-7</p>
+                        <p class="font-bold text-[#000000]" id="store-name-display">Vogue & Style Boutique</p>
+                        <p class="text-[#000000] font-medium text-[11px]" id="store-nit-display">NIT: 900.854.123-7</p>
                     </div>
                 </div>
             </div>
@@ -324,16 +324,16 @@
                 <!-- SECCIÓN 1: DASHBOARD PRINCIPAL            -->
                 <!-- ========================================== -->
                 <section id="sec-dashboard" class="section-page active-section space-y-6">
-                    <!-- Welcome Banner en Violeta #A38CE7 (SOLO botón Ir al POS / Caja) -->
-                    <div class="bg-[#A38CE7] rounded-3xl p-6 sm:p-8 text-white shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden border border-[#8F77D9]">
+                    <!-- Welcome Banner en #948CAD (SOLO botón Ir al POS / Caja) -->
+                    <div class="bg-[#948CAD] rounded-3xl p-6 sm:p-8 text-[#000000] shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden border border-[#837B9C]">
                         <div class="relative z-10 space-y-1">
-                            <h2 class="text-2xl sm:text-3xl font-bold font-heading">¡Hola, <span id="dash-user-name">Valeria</span>! 👋</h2>
-                            <p class="text-[#F8F6FE] text-sm font-medium" id="dash-welcome-text">Resumen general del estado del inventario, ventas y caja del día de hoy.</p>
+                            <h2 class="text-2xl sm:text-3xl font-bold font-heading text-[#000000]">¡Hola, <span id="dash-user-name">Valeria</span>! 👋</h2>
+                            <p class="text-[#000000] text-sm font-semibold" id="dash-welcome-text">Resumen general del estado del inventario, ventas y caja del día de hoy.</p>
                         </div>
                         <div class="relative z-10">
                             <!-- ÚNICO BOTÓN: Ir al POS / Caja según solicitud -->
                             <button onclick="app.navigateTo('pos')" class="bg-white text-[#000000] hover:bg-[#F4F0FD] px-5 py-3 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2 transition-all transform hover:scale-105">
-                                <i data-lucide="shopping-cart" class="w-5 h-5 text-[#A38CE7]"></i>
+                                <i data-lucide="shopping-cart" class="w-5 h-5 text-[#948CAD]"></i>
                                 <span>Ir al POS / Caja</span>
                             </button>
                         </div>
@@ -456,7 +456,6 @@
                                         <th class="py-3 px-5">Método Pago</th>
                                         <th class="py-3 px-5">Cant. Prendas</th>
                                         <th class="py-3 px-5 text-right">Total Factura</th>
-                                        <th class="py-3 px-5 text-center">Estado DIAN</th>
                                         <th class="py-3 px-5 text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -545,7 +544,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <h2 class="text-2xl font-bold font-heading text-[#000000]">🛒 Punto de Venta (POS / Caja)</h2>
-                            <p class="text-[#475569] text-sm">Registra ventas, aplica descuentos e imprime tiquetes con Facturación DIAN.</p>
+                            <p class="text-[#475569] text-sm">Registra ventas, aplica descuentos e imprime tiquetes de venta.</p>
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#D1FAE5] text-[#065F46] border border-[#6EE7B7]">
@@ -617,7 +616,7 @@
                                 </div>
                             </div>
 
-                            <!-- Forma de Pago & Factura DIAN -->
+                            <!-- Forma de Pago -->
                             <div class="border-t border-[#E2DCF8] pt-3 space-y-3">
                                 <div>
                                     <label class="block text-[11px] font-bold text-[#000000] mb-1.5 uppercase">Método de Pago:</label>
@@ -643,10 +642,10 @@
                                     </label>
                                 </div>
 
-                                <!-- Botón Procesar Venta / Emitir Factura DIAN -->
+                                <!-- Botón Procesar Venta / Emitir Factura -->
                                 <button onclick="app.processCheckout()" class="w-full btn-primary py-3.5 text-sm font-bold shadow-lg">
                                     <i data-lucide="check-circle" class="w-5 h-5"></i>
-                                    <span>Emitir Factura & Ticket DIAN</span>
+                                    <span>Emitir Factura & Tiquete</span>
                                 </button>
                             </div>
                         </div>
@@ -874,8 +873,8 @@
                 <section id="sec-reportes" class="section-page space-y-6">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div>
-                            <h2 class="text-2xl font-bold font-heading text-[#000000]">📈 Reportes, Analítica & DIAN</h2>
-                            <p class="text-[#475569] text-sm">Genera informes de rotación de inventario y estado de facturación electrónica DIAN.</p>
+                            <h2 class="text-2xl font-bold font-heading text-[#000000]">📈 Reportes & Analítica</h2>
+                            <p class="text-[#475569] text-sm">Genera informes de rotación de inventario y estado de facturación.</p>
                         </div>
                         
                         <!-- Filtros de fecha -->
@@ -892,21 +891,6 @@
                                 Filtrar
                             </button>
                         </div>
-                    </div>
-
-                    <!-- Módulo de Facturación Electrónica DIAN al Final del Día -->
-                    <div class="bg-[#F8F6FE] p-6 rounded-3xl border-2 border-[#B2A2DE] shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-[#065F46]"></span>
-                                <h3 class="font-bold text-base text-[#000000] font-heading">Transmisión de Facturas Electrónicas a la DIAN (Cierre Diario)</h3>
-                            </div>
-                            <p class="text-xs text-[#475569]">Envía en bloque todas las facturas electrónicas emitidas en la jornada con CUFE validado.</p>
-                        </div>
-                        <button onclick="app.transmitDianInvoices()" class="btn-primary text-xs py-2.5 px-5 shadow-md">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                            <span>Transmitir Facturas a la DIAN Ahora</span>
-                        </button>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1168,13 +1152,13 @@
         </div>
     </div>
 
-    <!-- MODAL RECIBO / TICKET TÉRMICO CON FACTURACIÓN ELECTRÓNICA DIAN -->
+    <!-- MODAL RECIBO / TICKET TÉRMICO -->
     <div id="modal-ticket" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-backdrop p-4">
         <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border-2 border-[#B2A2DE]">
             <div class="flex items-center justify-between border-b border-[#E2DCF8] pb-3 no-print">
                 <div class="flex items-center gap-2">
                     <i data-lucide="receipt" class="w-5 h-5 text-[#A38CE7]"></i>
-                    <h3 class="font-bold text-[#000000] text-base font-heading">Factura Electrónica & Tiquete DIAN</h3>
+                    <h3 class="font-bold text-[#000000] text-base font-heading">Factura & Tiquete de Venta</h3>
                 </div>
                 <button onclick="app.closeModal('modal-ticket')" class="text-[#8F77D9] hover:text-[#000000]">
                     <i data-lucide="x" class="w-5 h-5"></i>
@@ -1332,21 +1316,29 @@
                 </div>
 
                 <div class="border border-[#B2A2DE] rounded-2xl p-3 bg-[#F8F6FE] space-y-2">
-                    <p class="font-bold text-[#000000]">Añadir Ítem al Lote:</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div class="col-span-3">
-                            <select id="batch-item-product" class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
-                            </select>
+                    <p class="font-bold text-[#000000]">Añadir Ítem al Lote (Ingreso Manual):</p>
+                    <div class="space-y-2">
+                        <div>
+                            <label class="block font-semibold text-[#000000] text-[11px] mb-0.5">Nombre del Producto</label>
+                            <input type="text" id="batch-item-name" placeholder="Escribe el nombre del producto (ej. Camiseta Algodón Premium)..." class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000] font-medium">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block font-semibold text-[#000000] text-[11px] mb-0.5">Cantidad</label>
+                                <input type="number" id="batch-item-qty" min="1" placeholder="Cantidad" class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-[#000000] text-[11px] mb-0.5">Costo Unitario ($)</label>
+                                <input type="number" id="batch-item-cost" min="0" placeholder="Costo Unit. ($)" class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
+                            </div>
                         </div>
                         <div>
-                            <input type="number" id="batch-item-qty" min="1" placeholder="Cantidad" class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
+                            <label class="block font-semibold text-[#000000] text-[11px] mb-0.5">Detalles Adicionales</label>
+                            <input type="text" id="batch-item-details" placeholder="Ej. Talla M, Color Negro, SKU o Categ..." class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
                         </div>
                         <div>
-                            <input type="number" id="batch-item-cost" min="0" placeholder="Costo Unit. ($)" class="w-full px-2.5 py-1.5 bg-white border border-[#B2A2DE] rounded-lg text-xs text-[#000000]">
-                        </div>
-                        <div>
-                            <button type="button" onclick="app.addItemToBatch()" class="w-full btn-primary text-xs py-1.5 font-bold">
-                                + Añadir
+                            <button type="button" onclick="app.addItemToBatch()" class="w-full btn-primary text-xs py-2 font-bold">
+                                + Añadir Ítem al Lote
                             </button>
                         </div>
                     </div>
@@ -1359,6 +1351,7 @@
                             <thead class="bg-[#F4F0FD] text-[#000000] font-bold">
                                 <tr>
                                     <th class="p-1">Producto</th>
+                                    <th class="p-1">Detalles</th>
                                     <th class="p-1 text-center">Cant.</th>
                                     <th class="p-1 text-right">Costo U.</th>
                                     <th class="p-1 text-right">Total</th>

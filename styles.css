@@ -222,30 +222,31 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 /* ========================================== */
-/* BARRA LATERAL (PÚRPURA / VIOLETA #A38CE7) */
+/* BARRA LATERAL (#948CAD) */
 /* ========================================== */
 #sidebar {
-    background-color: #A38CE7;
-    border-right: 1px solid #927BD8;
-    box-shadow: 2px 0 15px rgba(163, 140, 231, 0.18);
+    background-color: #948CAD;
+    border-right: 1px solid #837B9C;
+    box-shadow: 2px 0 15px rgba(148, 140, 173, 0.18);
 }
 
 .nav-link {
     transition: all 0.2s ease;
-    color: #FFFFFF;
+    color: #000000 !important;
+    font-weight: 500;
 }
 .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.18);
-    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #000000 !important;
 }
 .nav-link.active {
     background-color: #FFFFFF;
     color: #000000 !important;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 .nav-link.active svg, .nav-link.active i {
-    color: #A38CE7 !important;
+    color: #948CAD !important;
 }
 
 /* Transiciones de Secciones SPA */
@@ -286,17 +287,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     border: 1px solid #FCA5A5;
 }
 
-.badge-dian-ok {
-    background-color: #D1FAE5;
-    color: #065F46;
-    border: 1px solid #6EE7B7;
-}
-.badge-dian-pending {
-    background-color: #FEF08A;
-    color: #854D0E;
-    border: 1px solid #FACC15;
-}
-
 /* Tablas con Bordes Pastel */
 table th {
     font-weight: 700;
@@ -326,7 +316,7 @@ table tbody tr:hover {
 }
 
 /* ========================================== */
-/* TICKET DE VENTA & FACTURA ELECTRÓNICA DIAN */
+/* TICKET DE VENTA & FACTURA DE VENTA */
 /* ========================================== */
 .ticket-paper {
     font-family: 'Courier New', Courier, monospace;
